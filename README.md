@@ -1,4 +1,4 @@
-# ppGame - Rust + Bevy 乒乓球游戏
+# pp_game - Rust + Bevy 乒乓球游戏
 
 这是一个使用 Rust 编程语言和 Bevy 游戏引擎构建的简单乒乓球游戏。
 
@@ -29,7 +29,7 @@
 1. 克隆项目：
    ```bash
    git clone <repository-url>
-   cd ppGame
+   cd pp_game
    ```
 
 2. 运行游戏：

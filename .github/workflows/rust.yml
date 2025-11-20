@@ -68,9 +68,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         # 定义上传文件的名称
-        name: ppGame-${{ matrix.os }}
+        name: pp_game-${{ matrix.os }}
         # 指定要上传的文件路径
-        path: target/release/ppGame.exe
+        path: target/release/pp_game.exe
       # 条件判断：仅在 Windows 环境下执行此步骤
       if: matrix.os == 'windows-latest'
       
@@ -79,9 +79,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         # 定义上传文件的名称
-        name: ppGame-${{ matrix.os }}
+        name: pp_game-${{ matrix.os }}
         # 指定要上传的文件路径（Unix 系统无 .exe 扩展名）
-        path: target/release/ppGame
+        path: target/release/pp_game
       # 条件判断：仅在非 Windows 环境下执行此步骤
       if: matrix.os != 'windows-latest'
 
@@ -107,6 +107,6 @@ jobs:
           generate_release_notes: true
           # 上传构建的产物
           files: |
-            ./artifacts/ppGame-windows-latest/ppGame.exe
+            ./artifacts/pp_game-windows-latest/pp_game.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

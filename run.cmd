@@ -1,9 +1,9 @@
 @echo off
-title ppGame
+title pp_game
 cd /d "%~dp0"
 
-if not exist ".\target\release\ppGame.exe" (
-    echo 未找到 ppGame.exe 文件，正在自动构建项目...
+if not exist ".\target\release\pp_game.exe" (
+    echo 未找到 pp_game.exe 文件，正在自动构建项目...
     echo 使用 cargo build --release 命令构建...
     cargo build --release
     
@@ -16,8 +16,8 @@ if not exist ".\target\release\ppGame.exe" (
     )
 )
 
-echo 正在启动 ppGame...
-.\target\release\ppGame.exe
+echo 正在启动 pp_game...
+.\target\release\pp_game.exe
 
 if %errorlevel% neq 0 (
     echo.

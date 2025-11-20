@@ -1,16 +1,17 @@
-# ppGame PowerShell 启动脚本
+# pp_game PowerShell 启动脚本
 # 设置当前目录为脚本所在目录
 Set-Location -Path $PSScriptRoot
-Write-Host "未找到 ppGame.exe 文件，正在自动构建项目..." -ForegroundColor Yellow
-Write-Host "使用 cargo build --release 命令构建..." -ForegroundColor Cyan
-# 执行构建命令
-$buildResult = cargo build --release
-
 
 # 检查可执行文件是否存在
-$exePath = ".\target\release\ppGame.exe"
+$exePath = ".\target\release\pp_game.exe"
 if (-not (Test-Path $exePath)) {
-   # 检查构建结果
+    Write-Host "未找到 pp_game.exe 文件，正在自动构建项目..." -ForegroundColor Yellow
+    Write-Host "使用 cargo build --release 命令构建..." -ForegroundColor Cyan
+    
+    # 执行构建命令
+    $buildResult = cargo build --release
+    
+    # 检查构建结果
     if ($LASTEXITCODE -ne 0) {
         Write-Host "构建失败!" -ForegroundColor Red
         Pause
@@ -18,12 +19,10 @@ if (-not (Test-Path $exePath)) {
     } else {
         Write-Host "构建成功!" -ForegroundColor Green
     }
-    
-    
 }
 
 # 启动游戏
-Write-Host "正在启动 ppGame..." -ForegroundColor Green
+Write-Host "正在启动 pp_game..." -ForegroundColor Green
 Start-Process -FilePath $exePath -Wait
 
 # 检查游戏退出状态
