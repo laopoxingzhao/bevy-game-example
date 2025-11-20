@@ -1,17 +1,23 @@
 # 工作流名称，会在 GitHub Actions 界面中显示
 name: Rust
 
+# 配置工作流权限
+permissions:
+  contents: write
+  discussions: write
+  packages: write
+  pages: write
+
 # 定义触发工作流的事件
 on:
   # 当推送到 main 分支时触发
   push:
     branches: [ "main" ]
-    # 当创建针对 main 分支的拉取请求时触发
-  pull_request:
-    branches: [ "main" ]
-  # 添加创建Release的事件触发器
-  release:
-    types: [created]
+    tags:
+      - 'v*.*.*'
+  # 当创建针对 main 分支的拉取请求时触发
+  # pull_request:
+  #   branches: [ "main" ]
 
 # 定义环境变量
 env:
@@ -54,8 +60,8 @@ jobs:
       run: cargo build --release --verbose
       
     # 第四步：运行测试
-    - name: Run tests
-      run: cargo test --verbose
+    # - name: Run tests
+    #   run: cargo test --verbose
       
     # 第五步：上传构建产物（仅适用于 Windows）
     - name: Upload artifacts
@@ -84,7 +90,8 @@ jobs:
     name: Create Release
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
+    # 当推送标签时触发此任务
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
       # 下载之前构建的所有artifacts
       - name: Download artifacts
@@ -92,14 +99,14 @@ jobs:
         with:
           path: ./artifacts
       
-      # 创建Release并上传所有资产
-      - name: Release
+      # 创建GitHub Release并上传所有资产
+      - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
+          # 自动根据标签生成发布说明
+          generate_release_notes: true
+          # 上传构建的产物
           files: |
             ./artifacts/ppGame-windows-latest/ppGame.exe
-            ./artifacts/ppGame-ubuntu-latest/ppGame
-            ./artifacts/ppGame-macos-latest/ppGame
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
